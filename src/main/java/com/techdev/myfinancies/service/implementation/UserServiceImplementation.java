@@ -1,15 +1,19 @@
 package com.techdev.myfinancies.service.implementation;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.techdev.myfinancies.exception.BusinessRuleException;
 import com.techdev.myfinancies.model.entity.User;
 import com.techdev.myfinancies.model.repository.UserRepository;
 import com.techdev.myfinancies.service.UserService;
 
+@Service
 public class UserServiceImplementation implements UserService{
 	
 	private UserRepository userRepository;
-
 	
-	
+	@Autowired
 	public UserServiceImplementation(UserRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
@@ -29,8 +33,11 @@ public class UserServiceImplementation implements UserService{
 
 	@Override
 	public void validateEmail(String email) {
-		// TODO Auto-generated method stub
+		boolean exist = userRepository.existsByEmail(email);
 		
+		if(exist) {
+			throw new BusinessRuleException("Já existe um usuário cadastrado com esse email.");
+		}
 	}
 
 }

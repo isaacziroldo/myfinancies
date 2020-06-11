@@ -7,8 +7,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Builder;
+import lombok.Data;
+
+
+
 @Entity
 @Table(name = "user", schema ="finance")
+@Builder
+@Data
 public class User {
 	
 	
